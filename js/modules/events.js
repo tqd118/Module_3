@@ -1,5 +1,6 @@
 import cards from "./cards.js";
 import form from "./form.js";
+import state from "./state.js";
 import ui from "./ui.js"
 
 const events = {
@@ -14,20 +15,20 @@ const events = {
         ui.elements.fileInput.addEventListener("input", () => ui.renderValidation());
         ui.elements.titleInput.addEventListener("input", () => ui.renderValidation());
 
-        document.addEventListener('keydown', this.handleKeyboardInput.bind(this));
+        document.addEventListener('keydown', this.handleKeyboardInput);
     },
 
     handleKeyboardInput(e) {
-        if (!this.activeCard) {
+        if (!state.activeCard) {
             return;
         }
 
         if (e.key === 'ArrowRight') {
-            this.navigate(1);
+            cards.navigate(1);
         }
 
         if (e.key === 'ArrowLeft') {
-            this.navigate(-1);
+            cards.navigate(-1);
         }
     },
 }
