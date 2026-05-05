@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="../src/assets/styles/style.css">
+    <title>Stage 3</title>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <form action="" name="addNew" id="addNew" method="post">
+                <label for="name">Name</label>
+                <input type="text" name="cardName" id="name">
+                <input type="file" name="url" id="url" accept="image/*">
+
+                <input type="submit" id="submit" value="Add new card">
+            </form>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="image-list"></section>
+
+            <div class="resizer"></div>
+
+            <aside class="preview-area">
+                <div class="controls">
+                    <button class="control" id="previous">&#10229;</button>
+                    <button class="control" id="close">&#x292B;</button>
+                    <button class="control" id="next">&#10230;</button>
+                </div>
+                <figure class="preview">
+                    <img class="preview__image" src="https://placehold.co/360x200/gray/gray" alt="blank preview">
+                    <figcaption class="preview__title">
+                        <h2>Preview</h2>
+                    </figcaption>
+                </figure>
+            </aside>
+
+            <span id="coords">x: 1, y: 1</span>
+        </div>
+
+        <span class="upward-arrow">&#8673;</span>
+    </main>
+
+    <div class="scroller-footer"></div>
+
+    <script type="module" src="../src/app.js"></script>
+</body>
+</html>
