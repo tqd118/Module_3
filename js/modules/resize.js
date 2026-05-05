@@ -15,7 +15,7 @@ const resize = {
 
             if (newListWidth > minListWidthPercent && 
                 newListWidth < maxListWidthPercent) {
-                this.setWidths(newListWidth);
+                ui.setWidths(newListWidth);
             }
         };
 
