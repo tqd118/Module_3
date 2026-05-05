@@ -1,6 +1,4 @@
-import state from "./state.js";
-
-const ui = {
+const uiRenderer = {
     elements: {
         previewArea: document.querySelector(".preview-area"),
 
@@ -78,8 +76,8 @@ const ui = {
     },
 
 
-    renderValidation() {
-        if (!state.isFormSubmitted) return;
+    renderValidation(isFormSubmitted) {
+        if (!isFormSubmitted) return;
 
         const file = this.elements.fileInput.files[0];
         const title = this.elements.titleInput.value.trim();
@@ -93,4 +91,4 @@ const ui = {
     }
 }
 
-export default ui;
+export default uiRenderer;

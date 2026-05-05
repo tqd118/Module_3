@@ -1,19 +1,8 @@
-import drag from "./drag.js";
-import state from "./state.js";
-import ui from "./ui.js";
+import dragController from "../controllers/dragController.js";
+import state from "../models/state.js";
+import uiRenderer from "./uiRenderer.js";
 
-const cards = {
-    createServerCards(count) {
-        for (let i = 0; i < count; i++) {
-            const card = {
-                title: `server image number ${i + 1}`,
-                url: state.getImageUrl(i)
-            }
-
-            state.serverCards.push(card);
-        }
-    },
-
+const cardsController = {
     buildCard(title, url) {
         const card = document.createElement("figure");
 
@@ -32,7 +21,7 @@ const cards = {
         `;
 
         card.addEventListener("click", () => this.selectCard(card));
-        card.addEventListener("dragstart", (event) => drag.handleDrag(event, card));
+        card.addEventListener("dragstart", (event) => dragController.handleDrag(event, card));
 
         return card;
     },
@@ -41,9 +30,9 @@ const cards = {
         const card = this.buildCard(title, url);
 
         if (byUser) {
-            ui.elements.imageList.insertAdjacentElement("afterbegin", card);        
+            uiRenderer.elements.imageList.insertAdjacentElement("afterbegin", card);        
         } else {
-            ui.elements.imageList.appendChild(card);
+            uiRenderer.elements.imageList.appendChild(card);
         }
     },
 
@@ -56,8 +45,8 @@ const cards = {
         card.classList.add("card_active");
         state.activeCard = card;
 
-        ui.updatePreview(card);
-        ui.updateControls(card);
+        uiRenderer.updatePreview(card);
+        uiRenderer.updateControls(card);
     },
 
     navigate(direction) {
@@ -84,9 +73,9 @@ const cards = {
         state.activeCard.classList.remove("card_active");
         state.activeCard = null;
         
-        ui.resetPreview();
-        ui.updateControls();
+        uiRenderer.resetPreview();
+        uiRenderer.updateControls();
     },
 }
 
-export default cards;
+export default cardsController;

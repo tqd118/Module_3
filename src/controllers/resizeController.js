@@ -1,8 +1,8 @@
-import ui from "./ui.js"
+import uiRenderer from "../components/uiRenderer.js"
 
-const resize = {
+const resizeController = {
     setup() {
-        ui.elements.resizer.addEventListener("mousedown", () => this.resize());
+        uiRenderer.elements.resizer.addEventListener("mousedown", () => this.resize());
     },
 
     resize() {
@@ -10,12 +10,12 @@ const resize = {
         const minListWidthPercent = 30;
 
         const move = (e) => {
-            const containerWidth = ui.elements.container.offsetWidth;
+            const containerWidth = uiRenderer.elements.container.offsetWidth;
             const newListWidth = (e.clientX / containerWidth) * 100;
 
             if (newListWidth > minListWidthPercent && 
                 newListWidth < maxListWidthPercent) {
-                ui.setWidths(newListWidth);
+                uiRenderer.setWidths(newListWidth);
             }
         };
 
@@ -29,4 +29,4 @@ const resize = {
     },
 }
 
-export default resize;
+export default resizeController;
