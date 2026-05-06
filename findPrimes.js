@@ -1,7 +1,8 @@
 const { performance } = require('perf_hooks');
 
-function findPrimes(start, end) {
-    const primes = [];
+function findPrimes(start, end, chunkSize = 5000) {
+    const tasks = [];
+
     const t0 = performance.now();
 
     const total = end - start + 1;
@@ -27,32 +28,32 @@ function findPrimes(start, end) {
         return true;
     }
 
-    function chunk(from) {
-        const chunkSize = 5000;
-        const to = Math.min(from + chunkSize, end + 1);
+    for (let from = start; from <= end; from += chunkSize) {
+        const to = Math.min(from + chunkSize - 1, end);
 
-        for (let n = from; n < to; n++) {
-            if (isPrime(n)) primes.push(n);
-
-            processed++;
-            const percent = (processed / total) * 100;
-
-            if (percent >= nextProgress) {
-                console.log(`Progress: ${nextProgress}%`);
-                nextProgress += 10;
-            }
-        }
-
-        if (to <= end) {
-           setTimeout(() => chunk(to), 0);
-        } else {
-            const t1 = performance.now();
-            console.log(`Found ${primes.length} primes`);
-            console.log(`Execution time: ${(t1 - t0)} ms`);
-        }
+        tasks.push(
+            Promise.resolve().then(() => {
+                const local = [];
+                for (let n = from; n <= to; n++) {
+                    if (isPrime(n)) local.push(n);
+                }
+                processed += chunkSize;
+                if((processed / total) * 100 >= nextProgress) {
+                    console.log(`Progress ${nextProgress}%`);
+                    nextProgress += 10;
+                }
+                return local;
+            })
+        );
     }
 
-    setTimeout(() => chunk(start), 0);
+    return Promise.all(tasks).then(parts => {
+        const result = parts.flat();
+
+        console.log(`Execution time ${performance.now() - t0} ms`);
+        console.log(`Found ${result.length} primes`);
+        return result;
+    });
 }
 
-findPrimes(1, 100000000);
+findPrimes(1, 1000000);
